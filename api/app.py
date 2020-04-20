@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 class Product(db.Model):
-    __tablename__ = "todos"
+    __tablename__ = "product"
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100))
     image = db.Column(db.String(500))
@@ -64,7 +64,7 @@ def get_product():
     return jsonify(result)
 
 #POST
-@app.route("/todo", methods=["POST"])
+@app.route("/product", methods=["POST"])
 def add_product():
     name = request.json['name']
     image = request.json['image']
@@ -77,7 +77,7 @@ def add_product():
     db.session.add(new_product)
     db.session.commit()
 
-    todo = Product.query.get(new_product.id)
+    product = Product.query.get(new_product.id)
     return product_schema.jsonify(product)
 
 #PUT / PATCH
@@ -98,7 +98,7 @@ def update_product(id):
     product.available = new_available
 
     db.session.commit()
-    return todo_schema.jsonify(product)
+    return product_schema.jsonify(product)
 
 #DELETE
 @app.route('/product/<id>')
