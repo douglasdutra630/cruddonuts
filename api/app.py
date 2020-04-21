@@ -29,18 +29,22 @@ class Product(db.Model):
     image = db.Column(db.String(500))
     description = db.Column(db.String(300))
     review = db.Column(db.String(300))
-    available = db.Column(db.Boolean)
+    category = db.Column(db.String(50))
+    quantity = db.Column(db.Integer)
+    available = db.Column(db.Integer)
 
     def __init__(self, name, image, description, review, available):
         self.name = name
         self.image = image
         self.description = description
         self.review = review
+        self.category = category
+        self.quantity = quantity
         self.available = available
 
 class ProductSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'image', 'description', 'review', 'available')
+        fields = ('id', 'name', 'image', 'description', 'review', 'category', 'quantity', 'available')
 
 product_schema = ProductSchema()
 products_schema = ProductSchema(many=True)
@@ -70,9 +74,11 @@ def add_product():
     image = request.json['image']
     description = request.json['description']
     review = request.json['review']
+    category = request.json['category']
+    quantity = request.json['quantity']
     available = request.json['available']
 
-    new_product = Product(name, image, description, review, available)
+    new_product = Product(name, image, description, review, category, quantity, available)
 
     db.session.add(new_product)
     db.session.commit()
@@ -89,12 +95,16 @@ def update_product(id):
     new_image = request.json['image']
     new_description = request.json['description']
     new_review = request.json['review']
+    new_category = request.json['category']
+    new_quantity = request.json['quantity']
     new_available = request.json['available']
 
     product.name = new_name
     product.image = new_image
     product.description = new_description
     product.review = new_review
+    product.category = new_category
+    product.quantity = new_quantity
     product.available = new_available
 
     db.session.commit()
