@@ -12,11 +12,12 @@ heroku = Heroku(app)
 
 env= Env()
 env.read_env()
-
+DATABASE_URL = env('DATABASE_URL')
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
+#app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 
 
 db = SQLAlchemy(app)
@@ -33,7 +34,7 @@ class Product(db.Model):
     quantity = db.Column(db.Integer)
     available = db.Column(db.Integer)
 
-    def __init__(self, name, image, description, review, available):
+    def __init__(self, name, image, description, review, category, quantity, available):
         self.name = name
         self.image = image
         self.description = description
