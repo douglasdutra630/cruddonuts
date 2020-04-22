@@ -23,6 +23,65 @@ app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+class User(db.Model):
+    __tablename__= "user"
+    user_id = db.Column(db.Integer, primary_key = True)
+    user_email = db.Column(db.String(50))
+    user_password = db.Column(db.String(50))
+
+    def __init__(self, user_email, user_password):
+        self.user_email = user_email
+        self.user_password = user_password
+
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ('user_id', 'user_email', 'user_password')
+
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
+
+@app.route("/auth/<id>", methods=['GET', 'PATCH'])
+def get_user():
+    user = User.query.get(id)
+
+    result = user_schema.dump(user)
+    return jsonify(result)
+
+def update_user():
+    user = User.query.get(id)
+
+    new_email = request.json['user_email']
+    new_password = request.json['user_password']
+
+    user.user_email = new_email
+    user.user_password = new_password
+
+    db.session.commit()
+    return user_schema.jsonify(user)
+
+@app.route("/auth/<id>", methods=["POST"])
+def create_user():
+
+    user_email = request.json['user_email']
+    user_password = request.json['user_password']
+
+     add_user = User(user_email, user_password)
+
+    db.session.add(add_user)
+    db.session.commit()
+
+    user = User.query.get(add_user.id)
+    return user_schema.jsonify(user)
+
+@app.route('/auth/<id>', methods=["DELETE"])
+def delete_user(id):
+    record = User.query.get(id)
+    db.session.delete(record)
+    db.session.commit()
+
+    return jsonify('Deleted.')
+
+
 class Product(db.Model):
     __tablename__ = "product"
     id = db.Column(db.Integer, primary_key = True)
@@ -112,7 +171,7 @@ def update_product(id):
     return product_schema.jsonify(product)
 
 #DELETE
-@app.route('/product/<id>')
+@app.route('/product/<id>', methods=["DELETE"])
 def delete_product(id):
     record = Product.query.get(id)
     db.session.delete(record)
