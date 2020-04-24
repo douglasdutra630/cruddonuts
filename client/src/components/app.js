@@ -1,27 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { Component } from 'react';
+import {BrowserRouter, Switch, Route, Router} from 'react-router-dom';
 
 import "../style/main";
-import Donut from "./donuts";
+import "../style/about";
+import "../style/navbar";
+import "../style/contact";
+import "../style/home";
 
-export default function App() {
-  const [donuts, setDonuts] = useState([]);
+import Product from "./product";
+import Home from "./home"
+import Navbar from './navbar';
+import About from './about';
+import Contact from './contact';
+import PersonalView from './pages/personalview';
 
-  const renderdonuts = () => {
-    return donuts.map((donut) => {
-      return <Donut key={donut.id} donut={donut} />;
-    });
-  };
 
-  const getdonuts = () => {
-    fetch("https://cruddonuts.herokuapp.com/products")
-      .then((res) => res.json())
-      .then((data) => setDonuts(data))
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getdonuts();
-  }, []);
-
-  return <div className="app">{renderdonuts()}</div>;
+export default class App extends Component {
+    render() {
+        return (
+            <div className="whole-nav">
+            <BrowserRouter>
+            <div>
+            <Navbar />
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/product" component={Product} />
+                    <Route exact path="/about" component={About} />
+                    <Route exact path="/contact" component={Contact} />
+                    <Route exact path="/personalview" component={PersonalView} />
+                    {/* <Route exact path="./pages/auth" component={Auth} /> */}
+                </Switch>
+            </div>
+            </BrowserRouter>
+            </div>
+        );
+    }
 }
