@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router";
 
 const Donut = (props) => {
   const { id, name, image, review, description } = props.donut;
@@ -11,7 +11,6 @@ const Donut = (props) => {
       <p>{name}</p>
       <p>{description}</p>
       <p>{review}</p>
-      
     </div>
   );
 };

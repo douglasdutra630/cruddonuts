@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import "../style/main";
 import Donut from "./donuts";
-import Navbar from "./product"
 
 export default function Products() {
   const [donuts, setDonuts] = useState([]);
@@ -24,9 +23,5 @@ export default function Products() {
     getdonuts();
   }, []);
 
-  return (
-      <div className="app">
-        {renderdonuts()}
-      </div>
-  )
+  return <div className="app">{renderdonuts()}</div>;
 }

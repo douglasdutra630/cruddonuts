@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import Footer from "../footer";
+import "../../style/login";
+
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -57,31 +60,39 @@ export default class Login extends Component {
   render() {
     return (
       <div>
-        <h1>ADMIN LOGIN</h1>
+        <div className="login-wrapper">
+          <div className="login-form">
+            <h1>ADMIN LOGIN</h1>
 
-        <div>{this.state.errorText}</div>
+            <div>{this.state.errorText}</div>
 
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            placeholder="Your email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="email"
+                name="email"
+                placeholder="Your email"
+                value={this.state.email}
+                onChange={this.handleChange}
+              />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Your password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
+              <input
+                type="password"
+                name="password"
+                placeholder="Your password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
 
-          <div>
-            <button type="submit">Login</button>
+              <div>
+                <button type="submit">Login</button>
+              </div>
+            </form>
           </div>
-        </form>
+          <div className="login-image">
+            <img src="https://content.fortune.com/wp-content/uploads/2014/12/rtxm8a5.jpg" />
+          </div>
+        </div>
+        <Footer />
       </div>
     );
   }

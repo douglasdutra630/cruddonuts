@@ -1,0 +1,16 @@
+.login-wrapper {
+  font-family: "Comic Neue", cursive;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+
+  .login-form {
+    display: grid;
+    justify-content: center;
+  }
+
+  img {
+    width: 100%;
+    opacity: 70%;
+  }
+}

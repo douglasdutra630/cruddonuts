@@ -1,22 +1,22 @@
 .navbar-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
 }
-  
+
 .nav-link-wrapper {
-    height: 22px;
-    border-bottom: 1px solid transparent;
-    transition: 0.5s ease-in-out;
-    margin-right: 20px;
-    text-transform: uppercase;
-    font-size: 0.9rem;
+  height: 22px;
+  border-bottom: 1px solid transparent;
+  transition: 0.5s ease-in-out;
+  margin-right: 20px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
 
-    &:hover {
-      border-bottom: 1px solid black;
-    }
-
-    
-   
+  &:hover {
+    border-bottom: 1px solid black;
   }
+  a {
+    text-decoration: none;
+  }
+}
