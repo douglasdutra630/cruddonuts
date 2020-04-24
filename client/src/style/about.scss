@@ -1,17 +1,28 @@
-.about-container{
+.about-container {
+  font-family: "Comic Neue", cursive;
   background-color: lightblue;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .center-text {
+    width: 60%;
+  }
 }
 
 .center-pic {
+  display: flex;
+  img {
     display: flex;
-    img {
-        display: flex;
-        justify-content: center;
-        background: lightsteelblue;
-    }
+    justify-content: center;
+    background: lightsteelblue;
+    border-radius: 10%;
+  }
 }
 
+.bottom-image-about {
+  img {
+    width: 500px;
+  }
+}

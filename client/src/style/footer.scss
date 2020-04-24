@@ -1,0 +1,13 @@
+.footer {
+  background-color: #608fce;
+  width: 100vw;
+  height: 150px;
+  display: grid;
+  justify-content: first baseline;
+  text-align: center;
+  margin-top: 15px;
+
+  p {
+    font-family: "Comic Neue", cursive;
+  }
+}

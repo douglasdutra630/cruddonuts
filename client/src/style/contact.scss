@@ -17,7 +17,6 @@
   font-family: inherit;
   color: inherit;
   padding: 1.5rem 2rem;
-  
 }
 .form-group2 {
   display: flex;
@@ -39,13 +38,12 @@ textarea {
 }
 
 .btn {
-    img{
-        display: flex;
-        justify-content: center;
-        height: 6vh;
-        width: 6vw;
-    }
-  
+  img {
+    display: flex;
+    justify-content: center;
+    height: 6vh;
+    width: 6vw;
+  }
 }
 
 .btn:active {
@@ -57,12 +55,12 @@ textarea {
   justify-content: center;
 }
 
-#fullName{
+#fullName {
   height: 50px;
   width: 500px;
 }
 
-#email{
+#email {
   height: 50px;
   width: 500px;
 }
