@@ -1,4 +1,7 @@
 import React from "react";
+import { Link, BrowserRouter as Router } from "react-router-dom";
+import SingleDonut from "./singleDonut";
+
 const Donut = (props) => {
   const { id, name, image, review, description } = props.donut;
   return (
@@ -6,7 +9,7 @@ const Donut = (props) => {
       <div className="img-wrapper">
         <img className="donut-img" src={image} alt="Donut" />
       </div>
-      <p>{name}</p>
+      <a>{name}</a>
       <p>{description}</p>
       <p>{review}</p>
     </div>
