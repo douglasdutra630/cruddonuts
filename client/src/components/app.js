@@ -1,12 +1,27 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from "react";
 
-export default class App extends Component {
-  render() {
-    return (
-      <div className='app'>
-        <h1>DevCamp React Starter</h1>
-        <h2>React Redux Router</h2>
-      </div>
-    );
-  }
+import "../style/main";
+import Donut from "./donuts";
+
+export default function App() {
+  const [donuts, setDonuts] = useState([]);
+
+  const renderdonuts = () => {
+    return donuts.map((donut) => {
+      return <Donut key={donut.id} donut={donut} />;
+    });
+  };
+
+  const getdonuts = () => {
+    fetch("https://cruddonuts.herokuapp.com/products")
+      .then((res) => res.json())
+      .then((data) => setDonuts(data))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getdonuts();
+  }, []);
+
+  return <div className="app">{renderdonuts()}</div>;
 }

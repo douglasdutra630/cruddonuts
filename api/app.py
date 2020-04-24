@@ -1,3 +1,4 @@
+# add attribute for loggedIn: NOT_LOGGED_IN
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -15,72 +16,36 @@ env.read_env()
 DATABASE_URL = env('DATABASE_URL')
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-#app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+# app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-class User(db.Model):
-    __tablename__= "user"
-    user_id = db.Column(db.Integer, primary_key = True)
-    user_email = db.Column(db.String(50))
-    user_password = db.Column(db.String(50))
+## USER CLASS ##
 
-    def __init__(self, user_email, user_password):
-        self.user_email = user_email
-        self.user_password = user_password
+class User(db.Model):
+     __tablename__ = 'user'
+
+    email = db.Column(db.String, primary_key=True)
+    password = db.Column(db.String)
+    authenticated = db.Column(db.Boolean, default=False)
+
+    def __init__(self, email, password, authentication):
+        self.email = email
+        self.password = password
+        self.authentication = authentication
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('user_id', 'user_email', 'user_password')
+        fields = ('id', 'email', 'password', 'authentication')
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
-@app.route("/auth/<id>", methods=['GET', 'PATCH'])
-def get_user():
-    user = User.query.get(id)
-
-    result = user_schema.dump(user)
-    return jsonify(result)
-
-def update_user():
-    user = User.query.get(id)
-
-    new_email = request.json['user_email']
-    new_password = request.json['user_password']
-
-    user.user_email = new_email
-    user.user_password = new_password
-
-    db.session.commit()
-    return user_schema.jsonify(user)
-
-@app.route("/auth/<id>", methods=["POST"])
-def create_user():
-
-    user_email = request.json['user_email']
-    user_password = request.json['user_password']
-
-     add_user = User(user_email, user_password)
-
-    db.session.add(add_user)
-    db.session.commit()
-
-    user = User.query.get(add_user.id)
-    return user_schema.jsonify(user)
-
-@app.route('/auth/<id>', methods=["DELETE"])
-def delete_user(id):
-    record = User.query.get(id)
-    db.session.delete(record)
-    db.session.commit()
-
-    return jsonify('Deleted.')
-
+## PRODUCT CLASS ##
 
 class Product(db.Model):
     __tablename__ = "product"
@@ -109,9 +74,88 @@ class ProductSchema(ma.Schema):
 product_schema = ProductSchema()
 products_schema = ProductSchema(many=True)
 
+
+## USER LOGIC/ENDPOINTS ##
+# route("/logged-in")
+# query for user, check logged in status, return user
+@app.route("/login", methods=["POST"])
+def login():
+    email = request.json["user_email"]
+    password = request.json["password"]
+
+    user = User.query.filter_by(user_email = email).first()
+    print(user)
+    if user:
+        if user.user_password == password:
+            user.logged_in = "LOGGED_IN"
+            return user_schema.jsonify(user)
+        else:
+            return jsonify("Invalid Credentials")
+    else:
+        return jsonify("Invalid User")
+
+def is_active(self):
+        """True, as all users are active."""
+        return True
+
+def get_id(self):
+        """Return the email address to satisfy Flask-Login's requirements."""
+        return self.email
+
+    def is_authenticated(self):
+        """Return True if the user is authenticated."""
+        return self.authenticated
+
+    def is_anonymous(self):
+        """False, as anonymous users aren't supported."""
+        return False
+
+@login_manager.user_loader
+def user_loader(user_id):
+
+    return User.query.get(user_id)
+
+@bull.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.get(form.email.data)
+        if user:
+            if bcrypt.check_password_hash(user.password, form.password.data):
+                user.authenticated = True
+                db.session.add(user)
+                db.session.commit()
+                login_user(user, remember=True)
+                return redirect(url_for("bull.reports"))
+
+
+@app.route("/logout", methods=["GET"])
+@login_required
+def logout():
+    """Logout the current user."""
+    user = current_user
+    user.authenticated = False
+    db.session.add(user)
+    db.session.commit()
+    logout_user()
+    return render_template("logout.html")
+
+
+@app.route('/auth/<id>', methods=["DELETE"])
+def delete_user(id):
+    record = User.query.get(id)
+    db.session.delete(record)
+    db.session.commit()
+
+    return jsonify('Deleted.')
+
+
+
 @app.route("/", methods=["GET"])
 def home():
     return "<h1> Flask Backend </h1>"
+
+## PRODUCT LOGIC/ ENDPOINTS ##
 
 #GET
 @app.route("/products", methods=["GET"])
