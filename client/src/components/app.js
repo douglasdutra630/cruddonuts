@@ -12,6 +12,8 @@ import Home from "./home"
 import Navbar from './navbar';
 import About from './about';
 import Contact from './contact';
+import PersonalView from './pages/personalview';
+
 
 export default class App extends Component {
     render() {
@@ -25,6 +27,7 @@ export default class App extends Component {
                     <Route exact path="/product" component={Product} />
                     <Route exact path="/about" component={About} />
                     <Route exact path="/contact" component={Contact} />
+                    <Route exact path="/personalview" component={PersonalView} />
                     {/* <Route exact path="./pages/auth" component={Auth} /> */}
                 </Switch>
             </div>
