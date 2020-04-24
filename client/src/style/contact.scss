@@ -1,0 +1,68 @@
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -15px;
+  margin: 0px;
+  background-color: lightsteelblue;
+  width: 100%;
+  height: 1000px;
+  font-size: 1.5rem;
+  font-family: inherit;
+  transition: all 0.3s;
+}
+.form-group {
+  font-size: 1.5em;
+  font-family: inherit;
+  color: inherit;
+  padding: 1.5rem 2rem;
+  
+}
+.form-group2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+  height: 250px;
+  font-size: 1.5rem;
+  font-family: inherit;
+  color: color;
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+
+textarea {
+  height: 250px;
+  width: 660px;
+}
+
+.btn {
+    img{
+        display: flex;
+        justify-content: center;
+        height: 6vh;
+        width: 6vw;
+    }
+  
+}
+
+.btn:active {
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
+}
+
+.center-btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#fullName{
+  height: 50px;
+  width: 500px;
+}
+
+#email{
+  height: 50px;
+  width: 500px;
+}

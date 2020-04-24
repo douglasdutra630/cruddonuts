@@ -1,0 +1,21 @@
+.about-container{
+  background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-pic {
+    display: flex;
+    img {
+        display: flex;
+        justify-content: center;
+        background: lightsteelblue;
+    }
+}
+
+// .about-footer{
+//   height: 200px;
+//   background-color: $charcoal;
+// }
