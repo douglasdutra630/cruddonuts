@@ -7,7 +7,7 @@ export default class Footer extends Component {
     return (
       <div className="footer">
         <p> CRUD DONUTS </p>
-        <p> &copy; Copyright 2018, Example Corporation </p>
+        <p> &copy; Copyright 1932, Example Corporation </p>
       </div>
     );
   }
