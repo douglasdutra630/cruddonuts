@@ -1,12 +1,31 @@
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .set-background {
-    img {
-        position: relative;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.front-image {
+  display: flex;
+  justify-content: center;
+  img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40%;
+  }
 }
 
 h2 {
-    position: absolute;
-    top: 200px;
-    left: 0;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 200px;
+  left: 0;
+  width: 100%;
 }
